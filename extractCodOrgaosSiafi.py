@@ -19,21 +19,15 @@ def fetchCodOrgaosSiafi(baseUrl: str, endpoint: str, apiKey: str):
 
         response = requests.get(url=urlCodOrgaos, headers=headers, params=params)
 
-
-
         if response.status_code ==  200:
             data = response.json()
-            print(f"{response.status_code} | {response.text} | Registros na página: {len(data)} | Registros Acumulados: {len(fetchedCod)}")
-            
 
-            if not response.content and not fetchedCod:
-                print("Sem dados")
 
+            if not data:
                 break
 
-            if not response.content: 
-                print("Sem mais dados")
 
+            print(f"{response.status_code} | Registros na página: {len(data)} | Registros Acumulados: {len(fetchedCod)}")            
             
             fetchedCod.extend(data)
 
@@ -41,6 +35,8 @@ def fetchCodOrgaosSiafi(baseUrl: str, endpoint: str, apiKey: str):
 
         else:
             response.raise_for_status()
+
+    return fetchedCod
 
         
 
